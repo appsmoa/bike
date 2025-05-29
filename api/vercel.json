@@ -1,0 +1,8 @@
+{
+    "rewrites": [
+      {
+        "source": "/bike/api/:match*",
+        "destination": "/api/:match*"
+      }
+    ]
+  }

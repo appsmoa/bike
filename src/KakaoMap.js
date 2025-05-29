@@ -15,11 +15,19 @@ const KakaoMap = () => {
       setIsLoading(true);
       try {
         // 첫 번째 API 호출 (1-1000)
-        const response1 = await fetch('http://openapi.seoul.go.kr:8088/4e664f6e77617070333550666c494d/json/bikeList/1/1000/');
+        //const response1 = await fetch('http://openapi.seoul.go.kr:8088/4e664f6e77617070333550666c494d/json/bikeList/1/1000/');
+        const rawUrl1 =
+        'http://openapi.seoul.go.kr:8088/4e664f6e77617070333550666c494d/json/bikeList/1/1000/';
+        const proxyUrl1 = `https://bike-git-main-appsmoas-projects.vercel.app/bike/api/proxy?url=${encodeURIComponent(rawUrl1)}`;
+        const response1 = await fetch(proxyUrl1);
         const data1 = await response1.json();
         
         // 두 번째 API 호출 (1001-2000)
-        const response2 = await fetch('http://openapi.seoul.go.kr:8088/4e664f6e77617070333550666c494d/json/bikeList/1001/2000/');
+        //const response2 = await fetch('http://openapi.seoul.go.kr:8088/4e664f6e77617070333550666c494d/json/bikeList/1001/2000/');
+        const rawUrl2 =
+        'http://openapi.seoul.go.kr:8088/4e664f6e77617070333550666c494d/json/bikeList/1001/2000/';
+        const proxyUrl2 = `https://bike-git-main-appsmoas-projects.vercel.app/bike/api/proxy?url=${encodeURIComponent(rawUrl2)}`;
+        const response2 = await fetch(proxyUrl2);
         const data2 = await response2.json();
         
         // 데이터 합치기
