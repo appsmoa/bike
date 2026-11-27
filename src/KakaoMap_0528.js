@@ -1,6 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 // bikeData import 제거
 
+// 이 파일은 예전 직접 호출 버전입니다. 서울 열린데이터광장 인증키는 .env에서 주입합니다.
+const SEOUL_OPEN_API_KEY = process.env.REACT_APP_SEOUL_OPEN_API_KEY;
+
+const bikeListUrl = (start, end) =>
+  `http://openapi.seoul.go.kr:8088/${SEOUL_OPEN_API_KEY}/json/bikeList/${start}/${end}/`;
+
 const KakaoMap = () => {
   const mapContainer = useRef(null);
   const [map, setMap] = useState(null);
@@ -15,11 +21,11 @@ const KakaoMap = () => {
       setIsLoading(true);
       try {
         // 첫 번째 API 호출 (1-1000)
-        const response1 = await fetch('http://openapi.seoul.go.kr:8088/4e664f6e77617070333550666c494d/json/bikeList/1/1000/');
+        const response1 = await fetch(bikeListUrl(1, 1000));
         const data1 = await response1.json();
         
         // 두 번째 API 호출 (1001-2000)
-        const response2 = await fetch('http://openapi.seoul.go.kr:8088/4e664f6e77617070333550666c494d/json/bikeList/1001/2000/');
+        const response2 = await fetch(bikeListUrl(1001, 2000));
         const data2 = await response2.json();
         
         // 데이터 합치기

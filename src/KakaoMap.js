@@ -1,6 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react';
 // bikeData import 제거
 
+// 프록시 서버 주소와 서울 열린데이터광장 인증키는 .env의 REACT_APP_* 값으로 주입합니다.
+const PROXY_URL = 'https://bike-fjga.vercel.app/api/proxy';
+const SEOUL_OPEN_API_KEY = process.env.REACT_APP_SEOUL_OPEN_API_KEY;
+
+if (!SEOUL_OPEN_API_KEY) {
+  console.warn(
+    'REACT_APP_SEOUL_OPEN_API_KEY가 설정되지 않았습니다. .env.example을 참고해 .env를 만들어 주세요.'
+  );
+}
+
+// 따릉이 대여소 목록 API 주소 (프록시에는 url 파라미터로 그대로 전달)
+const bikeListUrl = (start, end) =>
+  `http://openapi.seoul.go.kr:8088/${SEOUL_OPEN_API_KEY}/json/bikeList/${start}/${end}/`;
+
+const fetchBikeList = (start, end) => fetch(`${PROXY_URL}?url=${bikeListUrl(start, end)}`);
+
 const KakaoMap = () => {
   const mapContainer = useRef(null);
   const [map, setMap] = useState(null);
@@ -15,23 +31,11 @@ const KakaoMap = () => {
       setIsLoading(true);
       try {
         // 첫 번째 API 호출 (1-1000)
-        const response1 = await fetch('https://bike-fjga.vercel.app/api/proxy?url=http://openapi.seoul.go.kr:8088/4e664f6e77617070333550666c494d/json/bikeList/1/1000/');
-        /*
-        const rawUrl1 =
-        'http://openapi.seoul.go.kr:8088/4e664f6e77617070333550666c494d/json/bikeList/1/1000/';
-        const proxyUrl1 = `https://bike-fjga.vercel.app/api/proxy?url=${encodeURIComponent(rawUrl1)}`;
-        const response1 = await fetch(proxyUrl1);
-        */
+        const response1 = await fetchBikeList(1, 1000);
         const data1 = await response1.json();
         
         // 두 번째 API 호출 (1001-2000)
-        const response2 = await fetch('https://bike-fjga.vercel.app/api/proxy?url=http://openapi.seoul.go.kr:8088/4e664f6e77617070333550666c494d/json/bikeList/1001/2000/');
-        /*
-        const rawUrl2 =
-        'http://openapi.seoul.go.kr:8088/4e664f6e77617070333550666c494d/json/bikeList/1001/2000/';
-        const proxyUrl2 = `https://bike-fjga.vercel.app/api/proxy?url=${encodeURIComponent(rawUrl2)}`;
-        const response2 = await fetch(proxyUrl2);
-         */
+        const response2 = await fetchBikeList(1001, 2000);
         const data2 = await response2.json();
         
         // 데이터 합치기

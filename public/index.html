@@ -12,8 +12,8 @@
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <title>Bike</title>
-    <!-- 카카오 맵 API 스크립트 추가 -->
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5b8614241db87f0a963f91c749315f2c&libraries=clusterer"></script>
+    <!-- appkey는 빌드 시점에 .env의 REACT_APP_KAKAO_MAP_API_KEY 값으로 치환됩니다. -->
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=%REACT_APP_KAKAO_MAP_API_KEY%&libraries=clusterer"></script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
